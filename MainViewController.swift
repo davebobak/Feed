@@ -12,6 +12,10 @@ class MainViewController: UIViewController {
 
     var scrollView: UIScrollView!
     
+    init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
     // force a light status bar style
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
