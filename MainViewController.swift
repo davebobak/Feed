@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, UIScrollViewDelegate {
 
     var scrollView: UIScrollView!
     
@@ -36,74 +36,154 @@ class MainViewController: UIViewController {
         
         view.addSubview(scrollView);
         
+        scrollView.delegate = self
+        
+//        // Bottom gradient
+//        var imageViewGradient:UIImageView = UIImageView(frame: CGRectMake(0, CGRectGetHeight(view.frame)-200, CGRectGetWidth(view.frame), CGRectGetHeight(view.frame)))
+//        imageViewGradient.contentMode = UIViewContentMode.ScaleAspectFill
+//        imageViewGradient.image = UIImage(named: "gradient")
+//        if !imageViewGradient.image {
+//            // bug: iOS 7 not playing nice with asset catalog - use the full path for now
+//            imageViewGradient.image = UIImage(named: "gradient.png")
+//        }
+//        view.addSubview(imageViewGradient)
         
         // Recipe 1 Image
-        var recipe1ImageView:UIImageView = UIImageView(frame: CGRectMake(0, 0, CGRectGetWidth(view.frame), CGRectGetHeight(view.frame)))
-        recipe1ImageView.contentMode = UIViewContentMode.ScaleAspectFill
-        recipe1ImageView.image = UIImage(named: "recipe1")
-        if !recipe1ImageView.image {
+        var imageViewR1:UIImageView = UIImageView(frame: CGRectMake(0, 0, CGRectGetWidth(view.frame), CGRectGetHeight(view.frame)))
+        imageViewR1.contentMode = UIViewContentMode.ScaleAspectFill
+        imageViewR1.image = UIImage(named: "recipe1")
+        if !imageViewR1.image {
             // bug: iOS 7 not playing nice with asset catalog - use the full path for now
-            recipe1ImageView.image = UIImage(named: "recipe1.png")
+            imageViewR1.image = UIImage(named: "recipe1.png")
         }
-        scrollView.addSubview(recipe1ImageView)
+        imageViewR1.userInteractionEnabled = true
+        scrollView.addSubview(imageViewR1)
         
-        let recipe1Label:UILabel = UILabel()
-        recipe1Label.shadowColor = UIColor.blackColor()
-        recipe1Label.shadowOffset = CGSizeMake(1, 1)
-        recipe1Label.font = UIFont(name: "GillSans", size: 20)
-        recipe1Label.text = "Blueberry Pancakes"
-        recipe1Label.textColor = UIColor.whiteColor()
-        recipe1Label.sizeToFit()
+        // Recipe 1 Title Label
+        let labelR1:UILabel = UILabel()
+        labelR1.frame = CGRectMake(20, CGRectGetHeight(view.frame)-40, CGRectGetWidth(view.frame), 20)
+        labelR1.shadowColor = UIColor.blackColor()
+        labelR1.shadowOffset = CGSizeMake(1, 1)
+        labelR1.font = UIFont(name: "GillSans", size: 20)
+        labelR1.text = "Blueberry Pancakes"
+        labelR1.textColor = UIColor.whiteColor()
+        labelR1.sizeToFit()
+        scrollView.addSubview(labelR1)
+        
+        // Recipe 1 Save Button
+        var imageViewSaveR1:UIImageView = UIImageView(frame: CGRectMake(0, 0, 15, 15))
+        imageViewSaveR1.contentMode = UIViewContentMode.ScaleAspectFill
+        imageViewSaveR1.image = UIImage(named: "heart")
+        if !imageViewSaveR1.image {
+            // bug: iOS 7 not playing nice with asset catalog - use the full path for now
+            imageViewSaveR1.image = UIImage(named: "heart.png")
+        }
+    
+        var buttonSaveR1 = UIButton.buttonWithType(.System) as UIButton // buttons are a unique type of UIView, need to be cast
+        buttonSaveR1.frame = CGRect(x: CGRectGetWidth(view.frame)-30, y: CGRectGetHeight(view.frame)-35, width: 15, height: 15)
+        buttonSaveR1.addTarget(self, action: "btnTouched:", forControlEvents:.TouchUpInside)
+        
+        buttonSaveR1.addSubview(imageViewSaveR1)
+        scrollView.addSubview(buttonSaveR1)
 
-        scrollView.addSubview(recipe1Label)
         
         // Recipe 2 Image
-        var recipe2ImageView:UIImageView = UIImageView(frame: CGRectMake(0, CGRectGetHeight(view.frame), CGRectGetWidth(view.frame), CGRectGetHeight(view.frame)))
-        recipe2ImageView.contentMode = UIViewContentMode.ScaleAspectFill
-        recipe2ImageView.image = UIImage(named: "recipe2")
-        if !recipe2ImageView.image {
+        var imageViewR2:UIImageView = UIImageView(frame: CGRectMake(0, CGRectGetHeight(view.frame), CGRectGetWidth(view.frame), CGRectGetHeight(view.frame)))
+        imageViewR2.contentMode = UIViewContentMode.ScaleAspectFill
+        imageViewR2.image = UIImage(named: "recipe2")
+        if !imageViewR2.image {
             // bug: iOS 7 not playing nice with asset catalog - use the full path for now
-            recipe2ImageView.image = UIImage(named: "recipe2.png")
+            imageViewR2.image = UIImage(named: "recipe2.png")
         }
-        scrollView.addSubview(recipe2ImageView)
+        imageViewR2.userInteractionEnabled = true
+        
+        scrollView.addSubview(imageViewR2)
+
+        // Recipe 2 Title Label
+        let labelR2:UILabel = UILabel()
+        labelR2.frame = CGRectMake(20, CGRectGetHeight(view.frame)*2-40, CGRectGetWidth(view.frame), 20)
+        labelR2.shadowColor = UIColor.blackColor()
+        labelR2.shadowOffset = CGSizeMake(1, 1)
+        labelR2.font = UIFont(name: "GillSans", size: 20)
+        labelR2.text = "Lemon Sorbet"
+        labelR2.textColor = UIColor.whiteColor()
+        labelR2.sizeToFit()
+        
+        scrollView.addSubview(labelR2)
+        
+        // Recipe 2 Save Button
+        var imageViewSaveR2:UIImageView = UIImageView(frame: CGRectMake(0, 0, 15, 15))
+        imageViewSaveR2.contentMode = UIViewContentMode.ScaleAspectFill
+        imageViewSaveR2.image = UIImage(named: "heart")
+        if !imageViewSaveR2.image {
+            // bug: iOS 7 not playing nice with asset catalog - use the full path for now
+            imageViewSaveR2.image = UIImage(named: "heart.png")
+        }
+        
+        var buttonSaveR2 = UIButton.buttonWithType(.System) as UIButton // buttons are a unique type of UIView, need to be cast
+        buttonSaveR2.frame = CGRect(x: CGRectGetWidth(view.frame)-30, y: CGRectGetHeight(view.frame)*2-35, width: 15, height: 15)
+        buttonSaveR2.addTarget(self, action: "btnTouched:", forControlEvents:.TouchUpInside)
+        
+        buttonSaveR2.addSubview(imageViewSaveR2)
+        scrollView.addSubview(buttonSaveR2)
+        
         
         // Recipe 3 Image
-        var recipe3ImageView:UIImageView = UIImageView(frame: CGRectMake(0, CGRectGetHeight(view.frame)*2, CGRectGetWidth(view.frame), CGRectGetHeight(view.frame)))
-        recipe3ImageView.contentMode = UIViewContentMode.ScaleAspectFill
-        recipe3ImageView.image = UIImage(named: "recipe3")
-        if !recipe3ImageView.image {
+        var imageViewR3:UIImageView = UIImageView(frame: CGRectMake(0, CGRectGetHeight(view.frame)*2, CGRectGetWidth(view.frame), CGRectGetHeight(view.frame)))
+        imageViewR3.contentMode = UIViewContentMode.ScaleAspectFill
+        imageViewR3.image = UIImage(named: "recipe3")
+        if !imageViewR3.image {
             // bug: iOS 7 not playing nice with asset catalog - use the full path for now
-            recipe3ImageView.image = UIImage(named: "recipe3.png")
+            imageViewR3.image = UIImage(named: "recipe3.png")
         }
-        scrollView.addSubview(recipe3ImageView)
+        imageViewR3.userInteractionEnabled = true
         
-                   
-        var button = UIButton.buttonWithType(.System) as UIButton // buttons are a unique type of UIView, need to be cast\
-        button.setTitle("Hey Dave", forState: .Normal)
-        button.frame = CGRect(x: 50, y: 50, width: 100, height: 50)
-        scrollView.addSubview(button)
+        scrollView.addSubview(imageViewR3)
+    
+        // Recipe 2 Title Label
+        let labelR3:UILabel = UILabel()
+        labelR3.frame = CGRectMake(20, CGRectGetHeight(view.frame)*3-40, CGRectGetWidth(view.frame), 20)
+        labelR3.shadowColor = UIColor.blackColor()
+        labelR3.shadowOffset = CGSizeMake(1, 1)
+        labelR3.font = UIFont(name: "GillSans", size: 20)
+        labelR3.text = "Glazed Salmon"
+        labelR3.textColor = UIColor.whiteColor()
+        labelR3.sizeToFit()
         
+        scrollView.addSubview(labelR3)
         
-        let titleLabel:UILabel = UILabel()
-        titleLabel.shadowColor = UIColor.blackColor()
-        titleLabel.shadowOffset = CGSizeMake(1, 1)
-        titleLabel.font = UIFont(name: "GillSans", size: 20)
-        titleLabel.text = "504 Streetcar"
-        titleLabel.textColor = UIColor.whiteColor()
-        titleLabel.sizeToFit()
-        navigationItem.titleView = titleLabel
+        // Recipe 3 Save Button
+        var imageViewSaveR3:UIImageView = UIImageView(frame: CGRectMake(0, 0, 15, 15))
+        imageViewSaveR3.contentMode = UIViewContentMode.ScaleAspectFill
+        imageViewSaveR3.image = UIImage(named: "heart")
+        if !imageViewSaveR3.image {
+            // bug: iOS 7 not playing nice with asset catalog - use the full path for now
+            imageViewSaveR3.image = UIImage(named: "heart.png")
+        }
+        
+        var buttonSaveR3 = UIButton.buttonWithType(.System) as UIButton // buttons are a unique type of UIView, need to be cast
+        buttonSaveR3.frame = CGRect(x: CGRectGetWidth(view.frame)-30, y: CGRectGetHeight(view.frame)*3-35, width: 15, height: 15)
+        buttonSaveR3.addTarget(self, action: "btnTouched:", forControlEvents:.TouchUpInside)
+        
+        buttonSaveR3.addSubview(imageViewSaveR3)
+        scrollView.addSubview(buttonSaveR3)
     }
     
     
-//    func scrollViewDidScroll(scrollView: UIScrollView!) {
-//        print("scrolling")
-//    }
-//    
-//    func scrollViewWillEndDragging(scrollView: UIScrollView!, velocity: CGPoint, targetContentOffset: CMutablePointer<CGPoint>) {
-//        
-//        print("scroll stopped")
-//    }
+    func scrollViewDidScroll(scrollView: UIScrollView!) {
+        //print("scrolling")
+    }
     
+
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView!) {
+        
+        // Height of frame: CGRectGetHeight(view.frame)
+        
+        // How do I access the offset? targetContentOffset?
+        
+        //print("scrollViewDidEndDecelerating")
+    }
+ 
 }
 
 
